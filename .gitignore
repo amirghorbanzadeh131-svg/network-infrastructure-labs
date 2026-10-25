@@ -1,0 +1,23 @@
+# Keep raw lab files and credentials out of this documentation repository.
+private/
+raw/
+.env
+.env.*
+*.docx
+*.pdf
+*.unl
+*.unl.zip
+*.cfg
+*.conf
+*.log
+*.pcap
+*.pcapng
+*.key
+*.pem
+*.p12
+*.pfx
+*.qcow2
+*.vmdk
+*.ova
+*.vdi
+*.iso
