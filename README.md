@@ -4,7 +4,7 @@ Infrastructure lab portfolio by **Amir Ghorbanzadeh**.
 
 ## Shanghai 2026 lab portfolio
 
-- [Module B: Windows Infrastructure](docs/module-b-windows.md) — selected DNS, DHCP, and Ansible results.
+- [Module B: Windows Infrastructure](docs/module-b-windows.md) — RRAS IKEv2 site-to-site VPN, Group Policy, and selected DNS, DHCP, and Ansible results.
 - [Module C: Cisco Networking in EVE-NG](docs/selected-verification.md) — selected LACP, EIGRP, and DMVPN results.
 
 ## Project overview
