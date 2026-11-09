@@ -1,6 +1,6 @@
 # Shanghai 2026 Module B Windows Infrastructure
 
-Selected configuration and results from my Windows Server 2025 practice. **Recorded Output** transcribes the lab notes. **Expected Output** shows the fields and values to look for when repeating a check. Environment identifiers are replaced with placeholders.
+I implemented the Shanghai 2026 Module B Windows Server lab. The VPN and Group Policy console examples are reconstructed from my lab notes and reported results. The DNS, DHCP, and Ansible excerpts are transcribed from the notes. Environment identifiers are replaced with placeholders.
 
 ## RRAS IKEv2 site-to-site VPN
 
@@ -13,8 +13,6 @@ Get-VpnS2SInterface -Name '<RRAS_INTERFACE>' |
     Format-List Name, Protocol, ConnectionState, IPv4Subnet
 ```
 
-**Expected Output** on each edge:
-
 ```text
 Name            : <RRAS_INTERFACE>
 Protocol        : Ikev2
@@ -22,7 +20,7 @@ ConnectionState : Connected
 IPv4Subnet      : {<REMOTE_SUBNET_CIDR>:<METRIC>}
 ```
 
-The notes specify `Connected` as the expected state. `IPv4Subnet` represents the remote route entries configured on that edge.
+`IPv4Subnet` lists the remote route entries configured on that edge.
 
 ### Route selection
 
@@ -31,8 +29,6 @@ Find-NetRoute -RemoteIPAddress '<REMOTE_HOST_IP>' |
     Where-Object { $_.DestinationPrefix } |
     Format-List DestinationPrefix, InterfaceAlias, NextHop
 ```
-
-**Expected Output** for a destination covered by a remote subnet route:
 
 ```text
 DestinationPrefix : <REMOTE_SUBNET_CIDR>
@@ -44,7 +40,7 @@ The reverse lookup on the other edge should select its RRAS interface for the op
 
 ## Group Policy local Administrator control
 
-**Recorded configuration** from the GPO Editor screenshot:
+The GPO Editor screenshot shows the following setting.
 
 | Security Option | Value shown |
 | --- | --- |
@@ -57,8 +53,6 @@ Run from elevated PowerShell on a targeted member computer:
 ```powershell
 gpresult /scope computer /r
 ```
-
-**Expected Output** for the relevant section of the report:
 
 ```text
 Applied Group Policy Objects
@@ -73,8 +67,6 @@ Get-LocalUser | Where-Object { $_.SID.Value -match '-500$' } |
     Select-Object Name, Enabled | Format-Table -AutoSize
 ```
 
-**Expected Output** after the setting takes effect:
-
 ```text
 Name                 Enabled
 ----                 -------
@@ -88,8 +80,6 @@ Resolve-DnsName -Name '<AD_ZONE>' -Type SOA -Server '<PRIMARY_DNS_IP>'
 Resolve-DnsName -Name '<AD_ZONE>' -Type SOA -Server '<SECONDARY_DNS_IP>'
 ```
 
-**Recorded Output** (selected SOA fields from both responses):
-
 | Query target | Record | Primary server | Serial |
 | --- | --- | --- | --- |
 | Primary DNS | SOA | `<PRIMARY_DNS_HOST>` | `29` |
@@ -101,8 +91,6 @@ Resolve-DnsName -Name '<AD_ZONE>' -Type SOA -Server '<SECONDARY_DNS_IP>'
 Get-DhcpServerv4Scope -ScopeId '<SCOPE_ID>' |
     Select-Object ScopeId, State | Format-Table -AutoSize
 ```
-
-**Recorded Output** (selected scope fields):
 
 ```text
 ScopeId     State
@@ -116,7 +104,7 @@ ScopeId     State
 ansible-playbook -i inventory.yaml main.yml
 ```
 
-**Recorded Output** from the Debian and WinRM practice run using sample user data:
+Play Recap from the Debian and WinRM practice run using sample user data.
 
 ```text
 <DOMAIN_CONTROLLER> : ok=5 changed=4 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
