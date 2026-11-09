@@ -1,6 +1,11 @@
 # Enterprise Networking Lab in EVE-NG
 
-Personal Cisco networking lab by **Amir Ghorbanzadeh**.
+Infrastructure lab portfolio by **Amir Ghorbanzadeh**.
+
+## Shanghai 2026 lab portfolio
+
+- [Module B: Windows Infrastructure](docs/module-b-windows.md) — selected DNS, DHCP, and Ansible results.
+- [Module C: Cisco Networking in EVE-NG](docs/selected-verification.md) — selected LACP, EIGRP, and DMVPN results.
 
 ## Project overview
 
