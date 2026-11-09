@@ -1,12 +1,12 @@
 # Shanghai 2026 Module B Windows Infrastructure
 
-I implemented the Shanghai 2026 Module B Windows Server lab. The VPN and Group Policy console examples are reconstructed from my lab notes and reported results. The DNS, DHCP, and Ansible excerpts are transcribed from the notes. Environment identifiers are replaced with placeholders.
+I implemented the Shanghai 2026 Module B lab on Windows Server 2025. It covers site-to-site connectivity, Group Policy, DNS, DHCP, and Active Directory provisioning with Ansible.
 
 ## RRAS IKEv2 site-to-site VPN
 
-The notes document persistent IKEv2 demand-dial interfaces and routes to the opposite site's IPv4 networks on both RRAS edges.
+The VPN uses persistent IKEv2 demand-dial interfaces and routes to the opposite site's IPv4 networks on both RRAS edges.
 
-### Tunnel state
+### Tunnel state example
 
 ```powershell
 Get-VpnS2SInterface -Name '<RRAS_INTERFACE>' |
@@ -22,7 +22,7 @@ IPv4Subnet      : {<REMOTE_SUBNET_CIDR>:<METRIC>}
 
 `IPv4Subnet` lists the remote route entries configured on that edge.
 
-### Route selection
+### Route selection example
 
 ```powershell
 Find-NetRoute -RemoteIPAddress '<REMOTE_HOST_IP>' |
@@ -40,13 +40,13 @@ The reverse lookup on the other edge should select its RRAS interface for the op
 
 ## Group Policy local Administrator control
 
-The GPO Editor screenshot shows the following setting.
+The computer policy controls the built-in local Administrator account.
 
-| Security Option | Value shown |
+| Security Option | Configured value |
 | --- | --- |
 | Accounts: Administrator account status | `Disabled` |
 
-### Applied computer policy
+### Applied computer policy example
 
 Run from elevated PowerShell on a targeted member computer:
 
@@ -60,7 +60,7 @@ Applied Group Policy Objects
     <COMPUTER_SECURITY_GPO>
 ```
 
-### Built-in account state
+### Built-in account state example
 
 ```powershell
 Get-LocalUser | Where-Object { $_.SID.Value -match '-500$' } |
